@@ -2,12 +2,15 @@ package main
 
 import (
 	"bufio"
+	"day6/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
-	fmt.Printf("%v", readInput())
+	points := readInput()
+	routeLength, _ := solution.RouteFinder(points)
+	fmt.Printf("Part 1: %d", routeLength)
 }
 
 func readInput() [][]rune {

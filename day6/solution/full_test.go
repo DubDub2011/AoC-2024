@@ -31,7 +31,7 @@ func TestRouteFinder(t *testing.T) {
 
 	for idx, tc := range testCases {
 		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
-			result := solution.RouteFinder(tc.input)
+			result, _ := solution.RouteFinder(tc.input)
 			if result != tc.output {
 				t.Errorf("Case failed, expected %d, got %d", tc.output, result)
 			}
