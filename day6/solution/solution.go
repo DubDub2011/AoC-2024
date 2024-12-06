@@ -54,7 +54,7 @@ func moveGuard(pos frame.Position, direction int, grid frame.Grid) (frame.Positi
 
 		if targetVal == WallRune {
 			direction = (direction + 1) % 4
-			continue // might get stuck in here if we somehow get boxed in, shouldn't happen though
+			continue
 		}
 
 		grid.SetPos(targetPosition.X, targetPosition.Y, GuardRune)

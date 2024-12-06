@@ -11,6 +11,9 @@ func main() {
 	points := readInput()
 	routeLength, _ := solution.RouteFinder(points)
 	fmt.Printf("Part 1: %d", routeLength)
+
+	points = readInput()
+	fmt.Printf("Part 2: %d", solution.RouteBreaker(points))
 }
 
 func readInput() [][]rune {
