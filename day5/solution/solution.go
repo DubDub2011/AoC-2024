@@ -8,28 +8,15 @@ func PagePrint(orderingRules [][]int, printUpdates [][]int) int {
 
 	total := 0
 	for _, update := range printUpdates {
-		// first validate the update is valid
 		previousValues := make([]int, 0)
 		updateFailed := false
 		for _, val := range update {
-			if updateFailed {
+			unacceptablePriors := orderRules[val]
+			if !valueAcceptable(unacceptablePriors, previousValues) {
+				updateFailed = true
 				break
 			}
-			// get order rules for the value
-			unacceptablePriors := orderRules[val]
-			for _, prevValue := range previousValues {
-				if updateFailed {
-					break
-				}
-				for _, unacceptableValue := range unacceptablePriors {
-					if prevValue == unacceptableValue {
-						updateFailed = true
-						break
-					}
-				}
-			}
 
-			// add to previous values in the list
 			previousValues = append(previousValues, val)
 		}
 
@@ -37,8 +24,7 @@ func PagePrint(orderingRules [][]int, printUpdates [][]int) int {
 			continue
 		}
 
-		middleIndex := len(update) / 2
-		total += update[middleIndex]
+		total += update[len(update)/2]
 	}
 	return total
 }
@@ -51,7 +37,6 @@ func PagePrint2(orderingRules [][]int, printUpdates [][]int) int {
 
 	total := 0
 	for _, update := range printUpdates {
-		// first validate the update is valid
 		failedUpdate := false
 		sorted := make([]int, 0, len(update))
 		for idx := len(update) - 1; idx >= 0; {
@@ -61,10 +46,10 @@ func PagePrint2(orderingRules [][]int, printUpdates [][]int) int {
 			unacceptablePriors := orderRules[val]
 			if !valueAcceptable(unacceptablePriors, previousValues) {
 				failedUpdate = true
-				update = append([]int{val}, update[:idx]...) // move last to first position
+				update = append([]int{val}, update[:idx]...) // move value to the front
 				continue
 			} else {
-				sorted = append([]int{val}, sorted...)
+				sorted = append([]int{val}, sorted...) // value now in correct place, move to next
 				idx--
 			}
 		}
