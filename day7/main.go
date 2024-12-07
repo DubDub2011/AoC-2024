@@ -11,7 +11,8 @@ import (
 
 func main() {
 	inp := readInput()
-	fmt.Printf("Part 1: %d", solution.TotalCalibrationResult(inp))
+	fmt.Printf("Part 1: %d\n", solution.TotalCalibrationResult(inp))
+	fmt.Printf("Part 2: %d\n", solution.TotalCalibrationResult2(inp))
 }
 
 func readInput() [][]int {

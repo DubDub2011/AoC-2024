@@ -54,6 +54,8 @@ func TestTotalCalibrationResult2(t *testing.T) {
 		output int
 	}{
 		{[][]int{{156, 15, 6}}, 156},
+		{[][]int{{7290, 6, 8, 6, 15}}, 7290},
+		{[][]int{{192, 17, 8, 14}}, 192},
 	}
 
 	for idx, tc := range testCases {
