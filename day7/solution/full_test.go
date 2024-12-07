@@ -47,3 +47,22 @@ func TestTotalCalibrationResult(t *testing.T) {
 		})
 	}
 }
+
+func TestTotalCalibrationResult2(t *testing.T) {
+	testCases := []struct {
+		input  [][]int
+		output int
+	}{
+		{[][]int{{156, 15, 6}}, 156},
+	}
+
+	for idx, tc := range testCases {
+		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
+			res := solution.TotalCalibrationResult2(tc.input)
+
+			if res != tc.output {
+				t.Errorf("expected %d, got %d", tc.output, res)
+			}
+		})
+	}
+}
