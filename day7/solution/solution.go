@@ -1,7 +1,6 @@
 package solution
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -10,7 +9,6 @@ func TotalCalibrationResult(input [][]int) int {
 	for _, row := range input {
 		targetValue := row[0]
 		row = row[1:]
-		fmt.Printf("row %v", row)
 		if !possible(targetValue, row) {
 			continue
 		}
@@ -31,7 +29,7 @@ func possible(target int, input []int) bool {
 				break
 			}
 
-			if (operators >> position) == 0 {
+			if (operators>>position)&1 == 0 {
 				res += input[position+1]
 			} else {
 				res *= input[position+1]

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"day7/solution"
 	"fmt"
 	"os"
 	"strconv"
@@ -9,7 +10,8 @@ import (
 )
 
 func main() {
-	fmt.Printf("Input: %v", readInput())
+	inp := readInput()
+	fmt.Printf("Part 1: %d", solution.TotalCalibrationResult(inp))
 }
 
 func readInput() [][]int {
