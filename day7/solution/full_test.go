@@ -13,6 +13,14 @@ func TestTotalCalibrationResult(t *testing.T) {
 	}{
 		{[][]int{{3, 1, 2}}, 3},
 		{[][]int{{2, 1, 2}}, 2},
+		{[][]int{{4, 1, 2}}, 0},
+		{
+			[][]int{
+				{3, 1, 2},
+				{2, 1, 2},
+				{4, 1, 2},
+			}, 5,
+		},
 	}
 
 	for idx, tc := range testCases {
