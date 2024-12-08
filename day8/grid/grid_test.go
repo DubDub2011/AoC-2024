@@ -48,6 +48,7 @@ func TestGrid(t *testing.T) {
 		t.Errorf("Expected (0, -1) to be out of bounds")
 	}
 
+	// Test iterator
 	positions := make([]Position, 0)
 	for pos := range g.Positions() {
 		positions = append(positions, pos)
@@ -55,4 +56,5 @@ func TestGrid(t *testing.T) {
 	if len(positions) != 16 {
 		t.Errorf("Expected to contain 16 positions")
 	}
+
 }
