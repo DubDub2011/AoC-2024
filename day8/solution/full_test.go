@@ -77,3 +77,44 @@ func TestResonance(t *testing.T) {
 		})
 	}
 }
+
+func TestResonanceHarmonics(t *testing.T) {
+	testCases := []struct {
+		input  [][]rune
+		output int
+	}{
+		{
+			[][]rune{
+				{'.', '.', '.'},
+				{'.', 'a', '.'},
+				{'.', '.', '.'},
+			}, 0,
+		},
+		{
+			[][]rune{
+				{'.', '.', '.', '.'},
+				{'.', 'a', '.', '.'},
+				{'.', 'a', 'a', '.'},
+				{'.', '.', '.', '.'},
+			}, 9,
+		},
+		// {
+		// 	[][]rune{
+		// 		{'.', '.', '.', '.'},
+		// 		{'.', 'a', 'b', '.'},
+		// 		{'.', 'b', 'a', '.'},
+		// 		{'.', '.', '.', '.'},
+		// 	}, 4,
+		// },
+	}
+
+	for idx, tc := range testCases {
+		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
+			res := solution.ResonanceHarmonics(tc.input)
+
+			if res != tc.output {
+				t.Errorf("expected %d, got %d", tc.output, res)
+			}
+		})
+	}
+}

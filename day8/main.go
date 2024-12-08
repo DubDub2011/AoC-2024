@@ -2,12 +2,14 @@ package main
 
 import (
 	"bufio"
+	"day8/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
-	fmt.Printf("Input: %v", readInput())
+	data := readInput()
+	fmt.Printf("Part 1: %d", solution.Resonance(data))
 }
 
 func readInput() [][]rune {
