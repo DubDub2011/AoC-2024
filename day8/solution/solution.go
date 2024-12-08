@@ -25,18 +25,18 @@ func Resonance(input [][]rune) int {
 	for _, positions := range antennaPositions {
 		for idx := 0; idx < len(positions); idx++ {
 			// get two positions being processed
-			nextPos := idx + 1
-			if nextPos == len(positions) {
-				nextPos = 0
+			current := positions[idx]
+
+			temp := make([]gr.Position, len(positions))
+			copy(temp, positions)
+			others := append(temp[:idx], temp[idx+1:]...)
+
+			for _, other := range others {
+				current2Other := gr.Position{other.X + (other.X - current.X), other.Y + (other.Y - current.Y)}
+				other2Current := gr.Position{current.X + (current.X - other.X), current.Y + (current.Y - other.Y)}
+				results.SetPos(current2Other.X, current2Other.Y, AntinodeRune)
+				results.SetPos(other2Current.X, other2Current.Y, AntinodeRune)
 			}
-			a, b := positions[idx], positions[nextPos]
-			if a == b {
-				continue
-			}
-			a2b := gr.Position{b.X + (b.X - a.X), b.Y + (b.Y - a.Y)}
-			b2a := gr.Position{a.X + (a.X - b.X), a.Y + (a.Y - b.Y)}
-			results.SetPos(a2b.X, a2b.Y, AntinodeRune)
-			results.SetPos(b2a.X, b2a.Y, AntinodeRune)
 		}
 	}
 
