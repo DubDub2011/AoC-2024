@@ -47,4 +47,12 @@ func TestGrid(t *testing.T) {
 	if g.GetPos(0, -1) != ' ' {
 		t.Errorf("Expected (0, -1) to be out of bounds")
 	}
+
+	positions := make([]Position, 0)
+	for pos := range g.Positions() {
+		positions = append(positions, pos)
+	}
+	if len(positions) != 16 {
+		t.Errorf("Expected to contain 16 positions")
+	}
 }

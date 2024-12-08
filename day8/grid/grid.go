@@ -1,5 +1,9 @@
 package grid
 
+import (
+	"iter"
+)
+
 type Grid struct {
 	Points [][]rune
 }
@@ -43,4 +47,16 @@ func (g Grid) String() string {
 		res += "\n"
 	}
 	return res
+}
+
+func (g Grid) Positions() iter.Seq[Position] {
+	return func(yield func(Position) bool) {
+		for row := range g.Points {
+			for col := range g.Points[0] {
+				if !yield(Position{row, col}) {
+					return
+				}
+			}
+		}
+	}
 }

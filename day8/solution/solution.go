@@ -1,5 +1,10 @@
 package solution
 
+import (
+	gr "day8/grid"
+)
+
 func Resonance(input [][]rune) int {
-	return 0
+	grid := gr.Grid{input}
+
 }

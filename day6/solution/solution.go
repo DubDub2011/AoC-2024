@@ -2,6 +2,7 @@ package solution
 
 import (
 	gr "day6/grid"
+	"maps"
 )
 
 const (
@@ -30,6 +31,8 @@ func RouteFinder(points [][]rune) (int, bool) {
 	grid := gr.Grid{points}
 	guardPos := findGuard(grid)
 	currDir := Up
+
+	maps.Keys(moverFuncMap)
 
 	for {
 		var finished bool
