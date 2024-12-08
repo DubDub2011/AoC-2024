@@ -1,4 +1,4 @@
-package frame
+package grid
 
 import "testing"
 

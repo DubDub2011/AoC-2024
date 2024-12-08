@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"day6/frame"
+	gr "day6/grid"
 )
 
 const (
@@ -21,7 +21,7 @@ var (
 )
 
 func RouteBreaker(points [][]rune) int {
-	grid := frame.Grid{points}
+	grid := gr.Grid{points}
 	guardPos := findGuard(grid)
 
 	total := 0
@@ -42,16 +42,16 @@ func RouteBreaker(points [][]rune) int {
 	return total
 }
 
-func copyGrid(grid frame.Grid) frame.Grid {
+func copyGrid(grid gr.Grid) gr.Grid {
 	newPoints := make([][]rune, grid.GetLength())
 	for idx := 0; idx < grid.GetLength(); idx++ {
 		newPoints[idx] = make([]rune, grid.GetWidth())
 		copy(newPoints[idx], grid.Points[idx])
 	}
-	return frame.Grid{newPoints}
+	return gr.Grid{newPoints}
 }
 
-func checkRoute(pos frame.Position, grid frame.Grid) bool {
+func checkRoute(pos gr.Position, grid gr.Grid) bool {
 	direction := Up
 	grid.SetPos(pos.X, pos.Y, directionRuneMap[direction]) // set current position to already visited
 

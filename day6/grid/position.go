@@ -1,4 +1,4 @@
-package frame
+package grid
 
 type Position struct {
 	X int

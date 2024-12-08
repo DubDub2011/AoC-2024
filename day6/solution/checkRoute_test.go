@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"day6/frame"
+	gr "day6/grid"
 	"testing"
 )
 
@@ -20,8 +20,8 @@ func TestCheckRoute(t *testing.T) {
 		{'.', '.', '.', '.', '.', '.', '#', '.', '.', '.'},
 	}
 
-	pos := frame.Position{4, 6}
-	grid := frame.Grid{points}
+	pos := gr.Position{4, 6}
+	grid := gr.Grid{points}
 
 	if grid.GetPos(pos.X, pos.Y) != GuardRune {
 		t.Error("Wrong starting position for guard")

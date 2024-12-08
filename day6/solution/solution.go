@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"day6/frame"
+	gr "day6/grid"
 )
 
 const (
@@ -18,16 +18,16 @@ const (
 ) // directions
 
 var (
-	moverFuncMap = map[int]func(frame.Position) frame.Position{
-		Up:    frame.Position.Up,
-		Right: frame.Position.Right,
-		Down:  frame.Position.Down,
-		Left:  frame.Position.Left,
+	moverFuncMap = map[int]func(gr.Position) gr.Position{
+		Up:    gr.Position.Up,
+		Right: gr.Position.Right,
+		Down:  gr.Position.Down,
+		Left:  gr.Position.Left,
 	}
 )
 
 func RouteFinder(points [][]rune) (int, bool) {
-	grid := frame.Grid{points}
+	grid := gr.Grid{points}
 	guardPos := findGuard(grid)
 	currDir := Up
 
@@ -42,7 +42,7 @@ func RouteFinder(points [][]rune) (int, bool) {
 	return countVisitedPositions(grid), true
 }
 
-func moveGuard(pos frame.Position, direction int, grid frame.Grid) (frame.Position, int, bool) {
+func moveGuard(pos gr.Position, direction int, grid gr.Grid) (gr.Position, int, bool) {
 	grid.SetPos(pos.X, pos.Y, AlreadyVisitedRune) // set current position to already visited
 
 	for {
@@ -62,18 +62,18 @@ func moveGuard(pos frame.Position, direction int, grid frame.Grid) (frame.Positi
 	}
 }
 
-func findGuard(grid frame.Grid) frame.Position {
+func findGuard(grid gr.Grid) gr.Position {
 	for x := 0; x < grid.GetLength(); x++ {
 		for y := 0; y < grid.GetWidth(); y++ {
 			if grid.GetPos(x, y) == GuardRune {
-				return frame.Position{x, y}
+				return gr.Position{x, y}
 			}
 		}
 	}
 	panic("could not find guard")
 }
 
-func countVisitedPositions(grid frame.Grid) int {
+func countVisitedPositions(grid gr.Grid) int {
 	total := 0
 	for x := 0; x < grid.GetLength(); x++ {
 		for y := 0; y < grid.GetWidth(); y++ {
