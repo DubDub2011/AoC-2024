@@ -23,9 +23,13 @@ func Resonance(input [][]rune) int {
 
 	results := gr.New(emptyPoints(len(input), len(input[0])))
 	for _, positions := range antennaPositions {
-		for idx := 0; idx < len(positions)-1; idx++ {
+		for idx := 0; idx < len(positions); idx++ {
 			// get two positions being processed
-			a, b := positions[idx], positions[idx+1]
+			nextPos := idx + 1
+			if nextPos == len(positions) {
+				nextPos = 0
+			}
+			a, b := positions[idx], positions[nextPos]
 			a2b := gr.Position{b.X + (b.X - a.X), b.Y + (b.Y - a.Y)}
 			b2a := gr.Position{a.X + (a.X - b.X), a.Y + (a.Y - b.Y)}
 			results.SetPos(a2b.X, a2b.Y, AntinodeRune)
