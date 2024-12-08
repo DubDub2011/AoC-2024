@@ -30,6 +30,9 @@ func Resonance(input [][]rune) int {
 				nextPos = 0
 			}
 			a, b := positions[idx], positions[nextPos]
+			if a == b {
+				continue
+			}
 			a2b := gr.Position{b.X + (b.X - a.X), b.Y + (b.Y - a.Y)}
 			b2a := gr.Position{a.X + (a.X - b.X), a.Y + (a.Y - b.Y)}
 			results.SetPos(a2b.X, a2b.Y, AntinodeRune)
