@@ -9,7 +9,8 @@ import (
 
 func main() {
 	data := readInput()
-	fmt.Printf("Part 1: %d", solution.Resonance(data))
+	fmt.Printf("Part 1: %d\n", solution.Resonance(data))
+	fmt.Printf("Part 2: %d\n", solution.ResonanceHarmonics(data))
 }
 
 func readInput() [][]rune {
