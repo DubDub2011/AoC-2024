@@ -18,6 +18,13 @@ func TestResonance(t *testing.T) {
 				{'.', '.', '.'},
 			}, 0,
 		},
+		{
+			[][]rune{
+				{'.', '.', '.'},
+				{'.', 'a', '.'},
+				{'.', '.', 'a'},
+			}, 1,
+		},
 	}
 
 	for idx, tc := range testCases {
