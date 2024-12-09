@@ -1,25 +1,33 @@
-package solution_test
+package solution
 
-import (
-	"day9/solution"
-	"fmt"
-	"testing"
-)
+import "testing"
 
-func TestDiskFragmenter(t *testing.T) {
-	testCases := []struct {
-		input    []byte
-		expected int
-	}{
-		{[]byte("20"), 0},
+func TestCharToInt(t *testing.T) {
+	res := charToInt('4')
+	if res != 4 {
+		t.Errorf("expected 4, got %d", res)
 	}
 
-	for idx, testCase := range testCases {
-		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
-			res := solution.DiskFragmenter(testCase.input)
-			if res != testCase.expected {
-				t.Errorf("expected %d, got %d", testCase.expected, res)
-			}
-		})
+	res = charToInt('0')
+	if res != 0 {
+		t.Errorf("expected 4, got %d", res)
+	}
+
+	res = charToInt('9')
+	if res != 9 {
+		t.Errorf("expected 4, got %d", res)
+	}
+
+}
+
+func TestFileCount(t *testing.T) {
+	res := findFileCount([]byte("12345"))
+	if res != 3 {
+		t.Errorf("expected 3, got %d", res)
+	}
+
+	res = findFileCount([]byte("02045"))
+	if res != 1 {
+		t.Errorf("expected 1, got %d", res)
 	}
 }
