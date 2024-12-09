@@ -3,7 +3,7 @@ package solution
 func DiskFragmenter(input []byte) int {
 	pointer, filePointer := 0, len(input)-1
 	fileCount := findFileCount(input)
-	leftFileID, _ := 0, fileCount-1
+	leftFileID, rightFileID := 0, fileCount-1
 
 	resultPositionCounter := 0
 
@@ -14,12 +14,35 @@ func DiskFragmenter(input []byte) int {
 	for {
 		onFile := pointer%2 == 0
 		if onFile {
-			fileSize := charToInt(rune(input[pointer]))
+			fileSize := runeToInt(rune(input[pointer]))
 			for idx := 0; idx < fileSize; idx++ {
 				res[resultPositionCounter+idx] = leftFileID
 			}
 			leftFileID++
 			resultPositionCounter += fileSize
+		} else {
+			for {
+				fileSize := runeToInt(rune(input[filePointer]))
+				whiteSpaceSize := runeToInt(rune(input[pointer]))
+				if fileSize > whiteSpaceSize {
+					for idx := 0; idx < whiteSpaceSize; idx++ {
+						res[resultPositionCounter+idx] = rightFileID
+					}
+					rightFileID--
+					resultPositionCounter += whiteSpaceSize
+					input[filePointer] = byte(intToRune(fileSize - whiteSpaceSize)) // this is fine.. probably
+					break
+				}
+
+				for idx := 0; idx < fileSize; idx++ {
+					res[resultPositionCounter+idx] = rightFileID
+				}
+				rightFileID--
+				resultPositionCounter += fileSize
+				input[pointer] = byte(intToRune(whiteSpaceSize - fileSize))
+				input[filePointer] = '0'
+				filePointer -= 2
+			}
 		}
 
 		if pointer >= filePointer {
@@ -45,9 +68,19 @@ func findFileCount(disk []byte) int {
 	return sum
 }
 
-func charToInt(val rune) int {
+func runeToInt(val rune) int {
 	if val < '0' || val > '9' {
 		return 0
 	}
 	return int(val) - 48
+}
+
+func intToRune(val int) rune {
+	if val > 9 {
+		panic("can't be greater than 10")
+	}
+	if val < 0 {
+		panic("can't be negative")
+	}
+	return rune(val + 48)
 }

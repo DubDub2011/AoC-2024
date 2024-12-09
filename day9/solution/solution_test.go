@@ -3,17 +3,17 @@ package solution
 import "testing"
 
 func TestCharToInt(t *testing.T) {
-	res := charToInt('4')
+	res := runeToInt('4')
 	if res != 4 {
 		t.Errorf("expected 4, got %d", res)
 	}
 
-	res = charToInt('0')
+	res = runeToInt('0')
 	if res != 0 {
 		t.Errorf("expected 4, got %d", res)
 	}
 
-	res = charToInt('9')
+	res = runeToInt('9')
 	if res != 9 {
 		t.Errorf("expected 4, got %d", res)
 	}
