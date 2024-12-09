@@ -2,12 +2,17 @@ package main
 
 import (
 	"bufio"
+	"day9/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
-	fmt.Printf("Input: %s", readInput())
+	data := readInput()
+	fmt.Printf("Part 1: %d\n", solution.DiskFragmenter(data))
+	fmt.Printf("Part 2: %d\n", solution.DiskFragmenter2(data)) // wrong answer. :/
+	// Definitely taken the wrong approach here trying to do what I've done
+	// Will have to rethink and rework it at some point
 }
 
 func readInput() []byte {
