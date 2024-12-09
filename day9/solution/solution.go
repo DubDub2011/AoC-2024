@@ -28,7 +28,6 @@ func DiskFragmenter(input []byte) int {
 					for idx := 0; idx < whiteSpaceSize; idx++ {
 						res[resultPositionCounter+idx] = rightFileID
 					}
-					rightFileID--
 					resultPositionCounter += whiteSpaceSize
 					input[filePointer] = byte(intToRune(fileSize - whiteSpaceSize)) // this is fine.. probably
 					break
