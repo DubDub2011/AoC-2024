@@ -1,99 +1,89 @@
 package solution
 
 import (
-	"sort"
+	"strings"
 )
 
 func DiskFragmenter2(input []byte) int {
-	pointer, filePointer := 0, len(input)-1
-	fileCount := findFileCount(input)
-	leftFileID, rightFileID := 0, fileCount-1
+	disk, fileData := expand(input)
 
-	resultPositionCounter := 0
-
-	if filePointer%2 != 0 { // files are on even positions
-		filePointer--
-	}
-	res := make(map[int]int, 0)
+	idx := 0
 	for {
-		onFile := pointer%2 == 0
-		if onFile {
-			fileSize := runeToInt(rune(input[pointer]))
-			for idx := 0; idx < fileSize; idx++ {
-				res[resultPositionCounter+idx] = leftFileID
-			}
-			if rune(input[pointer]) != 'X' {
-				leftFileID++
-			}
-			resultPositionCounter += fileSize
-		} else {
-			whiteSpaceSize := runeToInt(rune(input[pointer]))
-
-			tempFilePointer, tempFileID := filePointer, rightFileID
+		freeSpace := disk[idx] == '0'
+		if freeSpace {
+			end := idx + 1
 			for {
-				if rune(input[tempFilePointer]) == 'X' {
-					tempFilePointer -= 2
-					continue
-				}
-
-				fileSize := runeToInt(rune(input[tempFilePointer]))
-				if fileSize == 0 {
-					tempFilePointer -= 2
-					tempFileID--
-					if tempFilePointer <= pointer {
-						break
-					}
-					continue
-				}
-
-				if fileSize <= whiteSpaceSize { // fits
-					for idx := 0; idx < fileSize; idx++ {
-						res[resultPositionCounter+idx] = tempFileID
-					}
-					resultPositionCounter += fileSize
-					whiteSpaceSize -= fileSize
-					input[pointer] = byte(intToRune(whiteSpaceSize))
-
-					final := make([]byte, len(input))
-					copy(final, input)
-					// update the input to insert the whitespace left behind
-					final = append(final[:tempFilePointer], '0', byte(intToRune(fileSize)), 'X')
-					input = append(final, input[tempFilePointer+1:]...)
-					filePointer += 2
-				}
-
-				tempFilePointer -= 2
-				tempFileID--
-				if tempFilePointer <= pointer {
+				if end == len(disk) && disk[end] == '0' {
 					break
 				}
+				end++
 			}
+			freeSpaceLength := end - idx
+			file := searchForFileThatFits(fileData, freeSpaceLength, idx)
+			if file != nil {
+				filePosition, fileLength, fileIdx := file[0], file[1], file[2]
+				// update disk to insert file here and remove file from above
+				for fileReplacerIdx := idx; fileReplacerIdx <= idx+fileLength; fileReplacerIdx++ {
+					disk[fileReplacerIdx] = '1'
+				}
 
-			for idx := 0; idx < whiteSpaceSize; idx++ {
-				res[resultPositionCounter+idx] = 0
+				for fileReplacerIdx := filePosition; fileReplacerIdx <= filePosition+fileLength; fileReplacerIdx++ {
+					disk[fileReplacerIdx] = '0'
+				}
+				fileData[fileIdx] = []int{idx, fileLength}
 			}
-			resultPositionCounter += whiteSpaceSize
 		}
-
-		if pointer >= filePointer {
+		idx++
+		if idx == len(disk) {
 			break
 		}
-		pointer++
 	}
+	return calcFileSpace(fileData)
+}
 
-	keys := []int{}
-	for k := range res {
-		keys = append(keys, k)
-	}
-	sort.Ints(keys)
-	test := []int{}
-	for k := range keys {
-		test = append(test, res[k])
-	}
+func searchForFileThatFits(fileData map[int][]int, size int, stopIndex int) []int {
+	for idx := len(fileData); idx >= 0; idx-- {
+		data := fileData[idx]
+		fileIdx := data[0]
+		if fileIdx > stopIndex {
+			return nil
+		}
 
-	checkSum := 0
-	for idx, fileID := range res {
-		checkSum += idx * fileID
+		fileLength := data[1]
+		if fileLength < size {
+			return append(data, idx)
+		}
 	}
-	return checkSum
+	return nil
+}
+
+func calcFileSpace(fileData map[int][]int) int {
+	sum := 0
+	for fileIdx, file := range fileData {
+		filePosition, fileLength := file[0], file[1]
+		for x := 0; x < fileLength; x++ {
+			sum += (filePosition + x) * fileIdx
+		}
+	}
+	return sum
+}
+
+func expand(input []byte) ([]byte, map[int][]int) { // int slice contains the file position and the length
+	fileCounter := 0
+	disk := make([]byte, 0)
+	fileData := make(map[int][]int)
+	for idx, char := range input {
+		partLen := runeToInt(rune(char))
+		if idx%2 == 0 { // on file pointer
+			if partLen == 0 {
+				continue
+			}
+			fileData[fileCounter] = []int{len(disk), partLen}
+			disk = append(disk, strings.Repeat("1", partLen)...)
+			fileCounter++
+		} else {
+			disk = append(disk, strings.Repeat("0", partLen)...)
+		}
+	}
+	return disk, fileData
 }
