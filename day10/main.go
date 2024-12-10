@@ -2,13 +2,14 @@ package main
 
 import (
 	"bufio"
+	"day10/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
 	data := readInput()
-	fmt.Printf("Input: %v\n", data)
+	fmt.Printf("Part 1: %d\n", solution.HeightmapRouter(data))
 }
 
 func readInput() [][]rune {

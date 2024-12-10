@@ -40,7 +40,22 @@ func route(grid gr.Grid, startingPos gr.Position) int {
 			break
 		}
 	}
+
+	// remove duplicates
+	currPositions = removeDuplicates(currPositions)
 	return len(currPositions)
+}
+
+func removeDuplicates(slice []gr.Position) []gr.Position {
+	allKeys := make(map[gr.Position]bool)
+	list := []gr.Position{}
+	for _, item := range slice {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return list
 }
 
 func getTrailheads(grid gr.Grid) []gr.Position {
