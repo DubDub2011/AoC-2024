@@ -8,14 +8,39 @@ func HeightmapRouter(heightmap [][]rune) int {
 
 	sum := 0
 	for _, pos := range trailheads {
-		sum += route(pos)
+		sum += route(grid, pos)
 	}
 
-	return 0
+	return sum
 }
 
-func route(startingPos gr.Position) int {
-	return 0
+func route(grid gr.Grid, startingPos gr.Position) int {
+	currPositions := []gr.Position{startingPos}
+	for target := 1; target < 10; target++ {
+		newPositions := make([]gr.Position, 0)
+
+		for _, pos := range currPositions {
+			if up := pos.Up(); grid.GetPos(up.X, up.Y) == intToRune(target) {
+				newPositions = append(newPositions, up)
+			}
+			if down := pos.Down(); grid.GetPos(down.X, down.Y) == intToRune(target) {
+				newPositions = append(newPositions, down)
+			}
+
+			if left := pos.Left(); grid.GetPos(left.X, left.Y) == intToRune(target) {
+				newPositions = append(newPositions, left)
+			}
+
+			if right := pos.Right(); grid.GetPos(right.X, right.Y) == intToRune(target) {
+				newPositions = append(newPositions, right)
+			}
+		}
+		currPositions = newPositions
+		if len(currPositions) == 0 {
+			break
+		}
+	}
+	return len(currPositions)
 }
 
 func getTrailheads(grid gr.Grid) []gr.Position {
@@ -26,4 +51,21 @@ func getTrailheads(grid gr.Grid) []gr.Position {
 		}
 	}
 	return trailheads
+}
+
+func runeToInt(val rune) int {
+	if val < '0' || val > '9' {
+		return 0
+	}
+	return int(val) - 48
+}
+
+func intToRune(val int) rune {
+	if val > 9 {
+		panic("can't be greater than 10")
+	}
+	if val < 0 {
+		panic("can't be negative")
+	}
+	return rune(val + 48)
 }
