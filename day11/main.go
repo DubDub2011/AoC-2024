@@ -2,13 +2,17 @@ package main
 
 import (
 	"bufio"
+	"day11/solution"
 	"fmt"
 	"os"
 	"strconv"
 )
 
 func main() {
-	fmt.Println("Input: ", readInput())
+	data, count := readInput(), 25
+	fmt.Printf("Part 1: %d\n", solution.StoneCount(data, count))
+	count2 := 75
+	fmt.Printf("Part 2: %d\n", solution.StoneCountSliced(data, count2))
 }
 
 func readInput() []int {
