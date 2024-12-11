@@ -1,13 +1,11 @@
 package solution
 
 import (
-	"fmt"
 	"strings"
 )
 
 func DiskFragmenter2(input []byte) int {
 	disk, fileData := expand(input)
-	fmt.Printf("Len of disk %d", len(disk))
 
 	for fileNumber := len(fileData) - 1; fileNumber >= 0; fileNumber-- {
 		data := fileData[fileNumber]
