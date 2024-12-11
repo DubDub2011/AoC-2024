@@ -7,54 +7,54 @@ import (
 func DiskFragmenter2(input []byte) int {
 	disk, fileData := expand(input)
 
+	for filePosition := len(fileData) - 1; filePosition >= 0; filePosition-- {
+		data := fileData[filePosition]
+		fileIdx, fileLength := data[0], data[1]
+
+		freeSpaceIdx := findFreeSpace(disk, fileLength)
+		if freeSpaceIdx == -1 {
+			continue
+		}
+
+		for idx := freeSpaceIdx; idx < freeSpaceIdx+fileLength; idx++ {
+			disk[idx] = '1'
+		}
+
+		for idx := filePosition; idx < fileIdx+fileLength; idx++ {
+			disk[idx] = '0'
+		}
+		fileData[filePosition] = []int{freeSpaceIdx, fileLength}
+	}
+
+	return calcFileSpace(fileData)
+}
+
+func findFreeSpace(disk []byte, size int) int {
 	idx := 0
 	for {
 		freeSpace := disk[idx] == '0'
 		if freeSpace {
 			end := idx + 1
 			for {
-				if end == len(disk) && disk[end] == '0' {
+				if end == len(disk) {
+					break
+				} else if disk[end] != '0' {
 					break
 				}
 				end++
 			}
 			freeSpaceLength := end - idx
-			file := searchForFileThatFits(fileData, freeSpaceLength, idx)
-			if file != nil {
-				filePosition, fileLength, fileIdx := file[0], file[1], file[2]
-				// update disk to insert file here and remove file from above
-				for fileReplacerIdx := idx; fileReplacerIdx <= idx+fileLength; fileReplacerIdx++ {
-					disk[fileReplacerIdx] = '1'
-				}
-
-				for fileReplacerIdx := filePosition; fileReplacerIdx <= filePosition+fileLength; fileReplacerIdx++ {
-					disk[fileReplacerIdx] = '0'
-				}
-				fileData[fileIdx] = []int{idx, fileLength}
+			if freeSpaceLength > size {
+				return idx
 			}
 		}
+
 		idx++
 		if idx == len(disk) {
 			break
 		}
 	}
-	return calcFileSpace(fileData)
-}
-
-func searchForFileThatFits(fileData map[int][]int, size int, stopIndex int) []int {
-	for idx := len(fileData); idx >= 0; idx-- {
-		data := fileData[idx]
-		fileIdx := data[0]
-		if fileIdx > stopIndex {
-			return nil
-		}
-
-		fileLength := data[1]
-		if fileLength < size {
-			return append(data, idx)
-		}
-	}
-	return nil
+	return -1
 }
 
 func calcFileSpace(fileData map[int][]int) int {
