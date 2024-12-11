@@ -10,9 +10,7 @@ import (
 func main() {
 	data := readInput()
 	fmt.Printf("Part 1: %d\n", solution.DiskFragmenter(data))
-	fmt.Printf("Part 2: %d\n", solution.DiskFragmenter2(data)) // wrong answer. :/
-	// Definitely taken the wrong approach here trying to do what I've done
-	// Will have to rethink and rework it at some point
+	fmt.Printf("Part 2: %d\n", solution.DiskFragmenter2(data)) // still wrong but no clue why...
 }
 
 func readInput() []byte {

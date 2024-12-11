@@ -11,7 +11,7 @@ func DiskFragmenter2(input []byte) int {
 		data := fileData[filePosition]
 		fileIdx, fileLength := data[0], data[1]
 
-		freeSpaceIdx := findFreeSpace(disk, fileLength)
+		freeSpaceIdx := findFreeSpace(disk, fileIdx, fileLength)
 		if freeSpaceIdx == -1 {
 			continue
 		}
@@ -20,7 +20,7 @@ func DiskFragmenter2(input []byte) int {
 			disk[idx] = '1'
 		}
 
-		for idx := filePosition; idx < fileIdx+fileLength; idx++ {
+		for idx := fileIdx; idx < fileIdx+fileLength; idx++ {
 			disk[idx] = '0'
 		}
 		fileData[filePosition] = []int{freeSpaceIdx, fileLength}
@@ -29,7 +29,7 @@ func DiskFragmenter2(input []byte) int {
 	return calcFileSpace(fileData)
 }
 
-func findFreeSpace(disk []byte, size int) int {
+func findFreeSpace(disk []byte, limit int, size int) int {
 	idx := 0
 	for {
 		freeSpace := disk[idx] == '0'
@@ -44,13 +44,13 @@ func findFreeSpace(disk []byte, size int) int {
 				end++
 			}
 			freeSpaceLength := end - idx
-			if freeSpaceLength > size {
+			if freeSpaceLength >= size {
 				return idx
 			}
 		}
 
 		idx++
-		if idx == len(disk) {
+		if idx >= limit {
 			break
 		}
 	}
