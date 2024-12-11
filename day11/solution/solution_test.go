@@ -37,7 +37,7 @@ func TestStoneCount(t *testing.T) {
 	}
 }
 
-func TestStoneCountSliced(t *testing.T) {
+func TestStoneCountMapped(t *testing.T) {
 	testCases := []struct {
 		input  []int
 		count  int
@@ -60,7 +60,7 @@ func TestStoneCountSliced(t *testing.T) {
 
 	for idx, tc := range testCases {
 		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
-			res := solution.StoneCountSliced(tc.input, tc.count)
+			res := solution.StoneCountMapped(tc.input, tc.count)
 			if res != tc.output {
 				t.Errorf("Expected %d, got %d", tc.output, res)
 			}
@@ -96,22 +96,22 @@ func BenchmarkStoneCountSliced(b *testing.B) {
 	count := 20
 	input := []int{0, 5601550, 3914, 852, 50706, 68, 6, 645371}
 	b.Run(fmt.Sprintf("Benchmark Slice %d", count), func(b *testing.B) {
-		solution.StoneCountSliced(input, count)
+		solution.StoneCountMapped(input, count)
 	})
 
 	count += 5
 	b.Run(fmt.Sprintf("Benchmark Slice %d", count), func(b *testing.B) {
-		solution.StoneCountSliced(input, count)
+		solution.StoneCountMapped(input, count)
 	})
 
 	count += 5
 	b.Run(fmt.Sprintf("Benchmark Slice %d", count), func(b *testing.B) {
-		solution.StoneCountSliced(input, count)
+		solution.StoneCountMapped(input, count)
 	})
 
 	count += 5
 	b.Run(fmt.Sprintf("Benchmark Slice %d", count), func(b *testing.B) {
-		solution.StoneCountSliced(input, count)
+		solution.StoneCountMapped(input, count)
 	})
 
 }

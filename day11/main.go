@@ -12,7 +12,7 @@ func main() {
 	data, count := readInput(), 25
 	fmt.Printf("Part 1: %d\n", solution.StoneCount(data, count))
 	count2 := 75
-	fmt.Printf("Part 2: %d\n", solution.StoneCountSliced(data, count2))
+	fmt.Printf("Part 2: %d\n", solution.StoneCountMapped(data, count2))
 }
 
 func readInput() []int {

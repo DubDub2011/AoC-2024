@@ -1,51 +1,59 @@
 package solution
 
 import (
-	"fmt"
-	"math"
 	"strconv"
 )
 
-func StoneCountSliced(input []int, count int) int {
-	res := make([][]int, 0, len(input))
+func StoneCountMapped(input []int, count int) int {
+	res := make(map[int]int, 0)
 	for _, val := range input {
-		res = append(res, buildIntSlice(val))
+		res[val]++
 	}
 
 	for idx := 0; idx < count; idx++ {
-		res = applyRulesSliced(res)
-		fmt.Printf("Length at %d is: %d\n", idx, len(res))
+		res = applyRulesMap(res)
 	}
 
-	return len(res)
+	sum := 0
+	for _, count := range res {
+		sum += count
+	}
+
+	return sum
 }
 
-func applyRulesSliced(input [][]int) [][]int {
-	res := make([][]int, 0, len(input))
-	for _, intSlice := range input {
-		if len(intSlice) == 1 && intSlice[0] == 0 {
-			res = append(res, []int{1})
+func applyRulesMap(input map[int]int) map[int]int {
+	res := make(map[int]int, len(input))
+	for val, count := range input {
+		if val == 0 {
+			res[1] += count
 			continue
 		}
 
-		if len(intSlice)%2 == 0 {
-			left, right := splitSlice(intSlice)
-			res = append(res, left)
-			res = append(res, right)
+		valStr := strconv.Itoa(val)
+		if len(valStr)%2 == 0 {
+			left, right := split(valStr)
+			res[left] += count
+			res[right] += count
 			continue
 		}
 
-		val := buildInt(intSlice)
 		val *= 2024
-		res = append(res, buildIntSlice(val))
+		res[val] += count
 	}
 	return res
 }
 
-func splitSlice(inp []int) ([]int, []int) {
-	left, right := inp[:(len(inp)/2)], inp[(len(inp)/2):]
-	left = buildIntSlice(buildInt((left)))   // needed to handle 0s
-	right = buildIntSlice(buildInt((right))) // needed to handle 0s
+func split(inp string) (int, int) {
+	leftStr, rightStr := inp[:(len(inp)/2)], inp[(len(inp)/2):]
+	left, err := strconv.Atoi(leftStr)
+	if err != nil {
+		panic(err)
+	}
+	right, err := strconv.Atoi(rightStr)
+	if err != nil {
+		panic(err)
+	}
 
 	return left, right
 }
@@ -55,27 +63,4 @@ func runeToInt(val rune) int {
 		return 0
 	}
 	return int(val) - 48
-}
-
-func buildInt(digits []int) int {
-	result := 0
-	length := len(digits)
-	for i, digit := range digits {
-		if digit < 0 || digit > 9 {
-			panic("invalid digit")
-		}
-
-		mag := int(math.Pow10(length - i - 1))
-		result += digit * mag
-	}
-	return result
-}
-
-func buildIntSlice(val int) []int {
-	strVal := strconv.Itoa(val)
-	res := make([]int, len(strVal))
-	for idx, digit := range strVal {
-		res[idx] = runeToInt(digit)
-	}
-	return res
 }
