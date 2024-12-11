@@ -12,7 +12,12 @@ func TestStoneCount(t *testing.T) {
 		count  int
 		output int
 	}{
-		{[]int{0}, 1, 1},
+		{[]int{0}, 1, 1}, // 1
+		{[]int{0}, 2, 1}, // 2024
+		{[]int{0}, 3, 2}, // 20 24
+		{[]int{0}, 4, 4}, // 2 0 2 4
+		{[]int{0}, 5, 4}, // 4048 0 4048 8096
+		{[]int{0}, 6, 7}, // 40 48 0 40 48 80 96
 	}
 
 	for idx, tc := range testCases {
