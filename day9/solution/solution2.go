@@ -1,14 +1,16 @@
 package solution
 
 import (
+	"fmt"
 	"strings"
 )
 
 func DiskFragmenter2(input []byte) int {
 	disk, fileData := expand(input)
+	fmt.Printf("Len of disk %d", len(disk))
 
-	for filePosition := len(fileData) - 1; filePosition >= 0; filePosition-- {
-		data := fileData[filePosition]
+	for fileNumber := len(fileData) - 1; fileNumber >= 0; fileNumber-- {
+		data := fileData[fileNumber]
 		fileIdx, fileLength := data[0], data[1]
 
 		freeSpaceIdx := findFreeSpace(disk, fileIdx, fileLength)
@@ -23,7 +25,7 @@ func DiskFragmenter2(input []byte) int {
 		for idx := fileIdx; idx < fileIdx+fileLength; idx++ {
 			disk[idx] = '0'
 		}
-		fileData[filePosition] = []int{freeSpaceIdx, fileLength}
+		fileData[fileNumber] = []int{freeSpaceIdx, fileLength}
 	}
 
 	return calcFileSpace(fileData)
@@ -59,10 +61,10 @@ func findFreeSpace(disk []byte, limit int, size int) int {
 
 func calcFileSpace(fileData map[int][]int) int {
 	sum := 0
-	for fileIdx, file := range fileData {
-		filePosition, fileLength := file[0], file[1]
-		for x := 0; x < fileLength; x++ {
-			sum += (filePosition + x) * fileIdx
+	for fileNumber, file := range fileData {
+		startIdx, fileLength := file[0], file[1]
+		for fileIdx := startIdx; fileIdx < startIdx+fileLength; fileIdx++ {
+			sum += fileIdx * fileNumber
 		}
 	}
 	return sum
