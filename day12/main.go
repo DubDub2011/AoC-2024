@@ -2,12 +2,14 @@ package main
 
 import (
 	"bufio"
+	"day12/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
-	fmt.Printf("Input: %v\n", readInput())
+	data := readInput()
+	fmt.Printf("Part 1: %d\n", solution.FencePricer(data))
 }
 
 func readInput() [][]rune {
