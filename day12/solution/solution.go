@@ -71,6 +71,7 @@ func FencePricerDiscount(input [][]rune) int {
 			regionPos := regionPositions[idx]
 			if alreadyVisited[regionPos] {
 				regionPositions = append(regionPositions[:idx], regionPositions[idx+1:]...)
+				idx--
 				continue
 			}
 
@@ -137,25 +138,81 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 		val := grid.GetPos(sidePiece.X, sidePiece.Y)
 		up, right, down, left := sidePiece.Up(), sidePiece.Right(), sidePiece.Down(), sidePiece.Left()
 		if grid.GetPos(up.X, up.Y) != val {
-			if !sidesUsed[left] && !sidesUsed[right] {
+			isNewSide := true
+			if sidesUsed[left] {
+				aboveLeft := left.Up()
+				if grid.GetPos(aboveLeft.X, aboveLeft.Y) != val {
+					isNewSide = false
+				}
+			}
+
+			if sidesUsed[right] {
+				aboveRight := right.Up()
+				if grid.GetPos(aboveRight.X, aboveRight.Y) != val {
+					isNewSide = false
+				}
+			}
+			if isNewSide {
 				sides++
 			}
 		}
 
 		if grid.GetPos(right.X, right.Y) != val {
-			if !sidesUsed[up] && !sidesUsed[down] {
+			isNewSide := true
+			if sidesUsed[up] {
+				upRight := up.Right()
+				if grid.GetPos(upRight.X, upRight.Y) != val {
+					isNewSide = false
+				}
+			}
+
+			if sidesUsed[down] {
+				downRight := down.Right()
+				if grid.GetPos(downRight.X, downRight.Y) != val {
+					isNewSide = false
+				}
+			}
+			if isNewSide {
 				sides++
 			}
 		}
 
 		if grid.GetPos(down.X, down.Y) != val {
-			if !sidesUsed[left] && !sidesUsed[right] {
+			isNewSide := true
+			if sidesUsed[right] {
+				rightDown := right.Down()
+				if grid.GetPos(rightDown.X, rightDown.Y) != val {
+					isNewSide = false
+				}
+			}
+
+			if sidesUsed[left] {
+				leftDown := left.Down()
+				if grid.GetPos(leftDown.X, leftDown.Y) != val {
+					isNewSide = false
+				}
+			}
+			if isNewSide {
 				sides++
 			}
 		}
 
 		if grid.GetPos(left.X, left.Y) != val {
-			if !sidesUsed[up] && !sidesUsed[down] {
+			isNewSide := true
+			if sidesUsed[up] {
+				upLeft := up.Left()
+				if grid.GetPos(upLeft.X, upLeft.Y) != val {
+					isNewSide = false
+				}
+			}
+
+			if sidesUsed[down] {
+				downLeft := down.Left()
+				if grid.GetPos(downLeft.X, downLeft.Y) != val {
+					isNewSide = false
+				}
+			}
+			if isNewSide {
 				sides++
 			}
 		}

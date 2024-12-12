@@ -10,6 +10,7 @@ import (
 func main() {
 	data := readInput()
 	fmt.Printf("Part 1: %d\n", solution.FencePricer(data))
+	fmt.Printf("Part 2: %d\n", solution.FencePricerDiscount(data))
 }
 
 func readInput() [][]rune {
