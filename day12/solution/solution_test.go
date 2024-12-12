@@ -158,6 +158,17 @@ func TestFencePricerDiscount(t *testing.T) {
 				{'M', 'M', 'M', 'I', 'S', 'S', 'J', 'E', 'E', 'E'},
 			}, 1206,
 		},
+		{
+			[][]rune{
+				{'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'},
+				{'A', 'A', 'C', 'B', 'B', 'D', 'D', 'A'},
+				{'A', 'A', 'C', 'B', 'B', 'A', 'A', 'A'},
+				{'A', 'B', 'B', 'A', 'A', 'A', 'A', 'A'},
+				{'A', 'B', 'B', 'A', 'D', 'D', 'D', 'A'},
+				{'A', 'A', 'A', 'A', 'D', 'A', 'D', 'A'},
+				{'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'},
+			}, 946,
+		},
 	}
 
 	for idx, tc := range testCases {

@@ -1,6 +1,10 @@
 package solution
 
-import gr "day12/grid"
+import (
+	gr "day12/grid"
+	"fmt"
+	"strings"
+)
 
 func FencePricer(input [][]rune) int {
 	grid := gr.New(input)
@@ -100,6 +104,8 @@ func FencePricerDiscount(input [][]rune) int {
 
 		total += area * sides
 	}
+
+	fmt.Println(grid.String())
 	return total
 }
 
@@ -139,19 +145,9 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 		up, right, down, left := sidePiece.Up(), sidePiece.Right(), sidePiece.Down(), sidePiece.Left()
 		if grid.GetPos(up.X, up.Y) != val {
 			isNewSide := true
-			if sidesUsed[left] {
-				aboveLeft := left.Up()
-				if grid.GetPos(aboveLeft.X, aboveLeft.Y) != val {
-					isNewSide = false
-				}
-			}
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Left, gr.Position.Up, sidesUsed)
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Right, gr.Position.Up, sidesUsed)
 
-			if sidesUsed[right] {
-				aboveRight := right.Up()
-				if grid.GetPos(aboveRight.X, aboveRight.Y) != val {
-					isNewSide = false
-				}
-			}
 			if isNewSide {
 				sides++
 			}
@@ -159,19 +155,10 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 
 		if grid.GetPos(right.X, right.Y) != val {
 			isNewSide := true
-			if sidesUsed[up] {
-				upRight := up.Right()
-				if grid.GetPos(upRight.X, upRight.Y) != val {
-					isNewSide = false
-				}
-			}
 
-			if sidesUsed[down] {
-				downRight := down.Right()
-				if grid.GetPos(downRight.X, downRight.Y) != val {
-					isNewSide = false
-				}
-			}
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Up, gr.Position.Right, sidesUsed)
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Down, gr.Position.Right, sidesUsed)
+
 			if isNewSide {
 				sides++
 			}
@@ -179,19 +166,8 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 
 		if grid.GetPos(down.X, down.Y) != val {
 			isNewSide := true
-			if sidesUsed[right] {
-				rightDown := right.Down()
-				if grid.GetPos(rightDown.X, rightDown.Y) != val {
-					isNewSide = false
-				}
-			}
-
-			if sidesUsed[left] {
-				leftDown := left.Down()
-				if grid.GetPos(leftDown.X, leftDown.Y) != val {
-					isNewSide = false
-				}
-			}
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Left, gr.Position.Down, sidesUsed)
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Right, gr.Position.Down, sidesUsed)
 			if isNewSide {
 				sides++
 			}
@@ -199,19 +175,8 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 
 		if grid.GetPos(left.X, left.Y) != val {
 			isNewSide := true
-			if sidesUsed[up] {
-				upLeft := up.Left()
-				if grid.GetPos(upLeft.X, upLeft.Y) != val {
-					isNewSide = false
-				}
-			}
-
-			if sidesUsed[down] {
-				downLeft := down.Left()
-				if grid.GetPos(downLeft.X, downLeft.Y) != val {
-					isNewSide = false
-				}
-			}
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Up, gr.Position.Left, sidesUsed)
+			isNewSide = isNewSide && !checkIfSideCounted(sidePiece, grid, gr.Position.Down, gr.Position.Left, sidesUsed)
 			if isNewSide {
 				sides++
 			}
@@ -219,5 +184,37 @@ func calculateSides(shape []gr.Position, grid gr.Grid) int {
 
 		sidesUsed[sidePiece] = true
 	}
+
+	for _, side := range sidePieces {
+		val := grid.GetPos(side.X, side.Y)
+		val = rune(strings.ToLower(string(val))[0])
+		grid.SetPos(side.X, side.Y, val)
+	}
 	return sides
+}
+
+func checkIfSideCounted(point gr.Position, grid gr.Grid, parallel, perpendicular func(gr.Position) gr.Position, usedSides map[gr.Position]bool) bool {
+	sideCounted := false
+
+	val := grid.GetPos(point.X, point.Y)
+	directionalPoint := point
+	for {
+		directionalPoint = parallel(directionalPoint)
+		if grid.GetPos(directionalPoint.X, directionalPoint.Y) != val {
+			break
+		}
+
+		inOne := perpendicular(directionalPoint)
+		if grid.GetPos(inOne.X, inOne.Y) == val {
+			break
+		}
+
+		if usedSides[directionalPoint] {
+			cornerPoint := perpendicular(directionalPoint)
+			if grid.GetPos(cornerPoint.X, cornerPoint.Y) != val {
+				sideCounted = true
+			}
+		}
+	}
+	return sideCounted
 }
