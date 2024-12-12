@@ -13,11 +13,11 @@ func New(points [][]rune) Grid {
 }
 
 func (g Grid) GetPos(x, y int) rune {
-	if y < 0 || y >= len(g.points[0]) {
+	if y < 0 || y >= len(g.points) {
 		return ' '
 	}
 
-	if x < 0 || x >= len(g.points) {
+	if x < 0 || x >= len(g.points[0]) {
 		return ' '
 	}
 
@@ -25,11 +25,11 @@ func (g Grid) GetPos(x, y int) rune {
 }
 
 func (g Grid) SetPos(x, y int, val rune) {
-	if x < 0 || x >= len(g.points[0]) {
+	if y < 0 || y >= len(g.points) {
 		return
 	}
 
-	if y < 0 || y >= len(g.points) {
+	if x < 0 || x >= len(g.points[0]) {
 		return
 	}
 
@@ -55,9 +55,9 @@ func (g Grid) String() string {
 
 func (g Grid) Positions() iter.Seq[Position] {
 	return func(yield func(Position) bool) {
-		for row := range g.points {
-			for col := range g.points[0] {
-				if !yield(Position{row, col}) {
+		for x := range g.points {
+			for y := range g.points[0] {
+				if !yield(Position{y, x}) {
 					return
 				}
 			}
