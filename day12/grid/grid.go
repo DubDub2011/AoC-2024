@@ -57,7 +57,7 @@ func (g Grid) Positions() iter.Seq[Position] {
 	return func(yield func(Position) bool) {
 		for x := range g.points {
 			for y := range g.points[x] {
-				if !yield(Position{y, x}) {
+				if !yield(Position{x, y}) {
 					return
 				}
 			}
