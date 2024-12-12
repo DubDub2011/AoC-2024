@@ -10,6 +10,7 @@ import (
 func main() {
 	data := readInput()
 	fmt.Printf("Part 1: %d\n", solution.DiskFragmenter(data))
+	data = readInput()
 	fmt.Printf("Part 2: %d\n", solution.DiskFragmenter2(data)) // still wrong but no clue why...
 }
 

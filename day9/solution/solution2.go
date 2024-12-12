@@ -4,11 +4,14 @@ import (
 	"strings"
 )
 
-func DiskFragmenter2(input []byte) int {
+func DiskFragmenter2(input []byte) uint64 {
 	disk, fileData := expand(input)
 
 	for fileNumber := len(fileData) - 1; fileNumber >= 0; fileNumber-- {
 		data := fileData[fileNumber]
+		if len(data) == 0 {
+			continue
+		}
 		fileIdx, fileLength := data[0], data[1]
 
 		freeSpaceIdx := findFreeSpace(disk, fileIdx, fileLength)
@@ -57,12 +60,12 @@ func findFreeSpace(disk []byte, limit int, size int) int {
 	return -1
 }
 
-func calcFileSpace(fileData map[int][]int) int {
-	sum := 0
+func calcFileSpace(fileData map[int][]int) uint64 {
+	sum := uint64(0)
 	for fileNumber, file := range fileData {
 		startIdx, fileLength := file[0], file[1]
 		for fileIdx := startIdx; fileIdx < startIdx+fileLength; fileIdx++ {
-			sum += fileIdx * fileNumber
+			sum += uint64(fileIdx) * uint64(fileNumber)
 		}
 	}
 	return sum
@@ -76,6 +79,7 @@ func expand(input []byte) ([]byte, map[int][]int) { // int slice contains the fi
 		partLen := runeToInt(rune(char))
 		if idx%2 == 0 { // on file pointer
 			if partLen == 0 {
+				fileCounter++
 				continue
 			}
 			fileData[fileCounter] = []int{len(disk), partLen}
