@@ -9,16 +9,24 @@ func FencePricer(input [][]rune) int {
 		val := grid.GetPos(pos.X, pos.Y)
 
 		up, right, down, left := pos.Up(), pos.Right(), pos.Down(), pos.Left()
-		if grid.GetPos(up.X, up.Y) != val {
+
+		pointVal := grid.GetPos(up.X, up.Y)
+		if pointVal != val {
 			perimiter++
 		}
-		if grid.GetPos(right.X, right.Y) != val {
+
+		pointVal = grid.GetPos(right.X, right.Y)
+		if pointVal != val {
 			perimiter++
 		}
-		if grid.GetPos(down.X, down.Y) != val {
+
+		pointVal = grid.GetPos(down.X, down.Y)
+		if pointVal != val {
 			perimiter++
 		}
-		if grid.GetPos(left.X, left.Y) != val {
+
+		pointVal = grid.GetPos(left.X, left.Y)
+		if pointVal != val {
 			perimiter++
 		}
 		area++

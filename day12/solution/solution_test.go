@@ -21,6 +21,19 @@ func TestFencePricer(t *testing.T) {
 				{'A', 'A'},
 			}, 12,
 		},
+		{
+			[][]rune{
+				{'A', 'A'},
+				{'A', 'A'},
+			}, 32,
+		},
+		{
+			[][]rune{
+				{'A'},
+				{'A', 'A', 'A'},
+				{'A'},
+			}, 60,
+		},
 	}
 
 	for idx, tc := range testCases {
