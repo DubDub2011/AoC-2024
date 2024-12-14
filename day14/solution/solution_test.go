@@ -17,6 +17,14 @@ func TestRobotPredictor(t *testing.T) {
 				{0, 0, 1, 1},
 			}, 1, 0,
 		},
+		{
+			[][]int{
+				{0, 0, 1, 1},
+				{100, 0, -1, 1},
+				{0, 100, 1, -1},
+				{100, 100, -1, 1},
+			}, 1, 1,
+		},
 	}
 
 	for idx, tc := range testCases {
