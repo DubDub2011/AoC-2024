@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"day13/solution"
 	"fmt"
 	"os"
 	"strconv"
@@ -10,7 +11,8 @@ import (
 
 func main() {
 	data := readInput()
-	fmt.Println("Input: %v", data)
+	fmt.Println("Part 1: %d", solution.ClawMachine(data))
+
 }
 
 func readInput() [][]int {

@@ -3,12 +3,11 @@ package solution
 import "fmt"
 
 func ClawMachine(input [][]int) int {
-	// wonder if this wont work because computers don't math
 	tokens := 0
 	for _, puzzle := range input {
 		A := [][]int{
-			{puzzle[0], puzzle[1]},
-			{puzzle[2], puzzle[3]},
+			{puzzle[0], puzzle[2]},
+			{puzzle[1], puzzle[3]},
 		}
 
 		B := []int{
@@ -28,8 +27,21 @@ func ClawMachine(input [][]int) int {
 		}
 
 		result := []int{
-			(inverseA[0][0]*B[0] + inverseA[0][1]*B[1]) / determinant,
-			(inverseA[1][0]*B[0] + inverseA[1][1]*B[1]) / determinant,
+			(inverseA[0][0]*B[0] + inverseA[0][1]*B[1]),
+			(inverseA[1][0]*B[0] + inverseA[1][1]*B[1]),
+		}
+
+		if result[0]%determinant != 0 || result[1]%determinant != 0 {
+			continue
+		}
+
+		result = []int{
+			result[0] / determinant,
+			result[1] / determinant,
+		}
+
+		if result[0] < 0 || result[1] < 0 {
+			continue
 		}
 
 		fmt.Printf("Result %v\n", result)
