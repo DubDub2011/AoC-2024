@@ -11,7 +11,8 @@ import (
 
 func main() {
 	data := readInput()
-	fmt.Println("Part 1: %d", solution.ClawMachine(data))
+	fmt.Printf("Part 1: %d", solution.ClawMachine(data))
+	fmt.Printf("Part 2: %d", solution.BigClawMachine(data))
 
 }
 
