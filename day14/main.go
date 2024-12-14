@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"day14/solution"
 	"fmt"
 	"os"
 	"strconv"
@@ -10,8 +11,7 @@ import (
 
 func main() {
 	data := readInput()
-	fmt.Printf("Data: %v\n", data)
-
+	fmt.Printf("Part 1: %d\n", solution.RobotPredictor(data, 100))
 }
 
 func readInput() [][]int {

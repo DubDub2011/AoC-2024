@@ -24,7 +24,7 @@ func TestRobotPredictor(t *testing.T) {
 				{0, 100, 1, -1},
 				{100, 100, -1, 1},
 			}, 1, 1,
-		},
+		}, // this one is annoying to test... too much going on
 	}
 
 	for idx, tc := range testCases {
