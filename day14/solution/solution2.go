@@ -21,24 +21,40 @@ func RobotChristmasTree(robotData [][]int) int {
 			robotPositions[robot.Position()] = true
 		}
 
-		if robotPositions[gr.Position{WIDTH / 2, 0}] &&
-			robotPositions[gr.Position{WIDTH/2 - 1, 1}] &&
-			robotPositions[gr.Position{WIDTH/2 + 1, 1}] &&
-			robotPositions[gr.Position{WIDTH/2 - 2, 2}] &&
-			robotPositions[gr.Position{WIDTH/2 + 2, 2}] &&
-			robotPositions[gr.Position{WIDTH/2 - 3, 3}] &&
-			robotPositions[gr.Position{WIDTH/2 + 3, 3}] &&
-			robotPositions[gr.Position{WIDTH/2 - 4, 4}] &&
-			robotPositions[gr.Position{WIDTH/2 + 4, 4}] &&
-			robotPositions[gr.Position{WIDTH/2 - 5, 5}] &&
-			robotPositions[gr.Position{WIDTH/2 + 5, 5}] { // this is lazy but might be good enough
-			draw(robots)
-			break
+		// The tree could appear anywhere in the grid, so best using the robot positions and searching next to them for robots,nd repeat
+		completed := false
+		for pos := range robotPositions {
+			requiredSuccesses := 5
+			downLeft, downRight := pos, pos
+			for {
+				downLeft = downLeft.Down().Left()
+				downRight = downRight.Down().Right()
+				if robotPositions[downLeft] && robotPositions[downRight] {
+					requiredSuccesses--
+				} else {
+					break
+				}
+
+				if requiredSuccesses == 0 {
+					break
+				}
+			}
+
+			if requiredSuccesses == 0 {
+				completed = true
+				draw(robots)
+				break
+			}
 		}
+
 		count++
 
 		if count%100000 == 0 {
 			fmt.Printf("Count: %d\n", count)
+		}
+
+		if completed {
+			break
 		}
 	}
 
