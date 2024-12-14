@@ -15,7 +15,7 @@ func RobotChristmasTree(robotData [][]int) int {
 
 	count := 0
 	for {
-		robotPositions := make(map[gr.Position]bool)
+		robotPositions := make(map[gr.Position]bool, len(robots))
 		for _, robot := range robots {
 			robot.Move(1)
 			robotPositions[robot.Position()] = true
@@ -33,14 +33,17 @@ func RobotChristmasTree(robotData [][]int) int {
 			robotPositions[gr.Position{WIDTH/2 - 5, 5}] &&
 			robotPositions[gr.Position{WIDTH/2 + 5, 5}] { // this is lazy but might be good enough
 			draw(robots)
+			break
 		}
 		count++
+
+		if count%100000 == 0 {
+			fmt.Printf("Count: %d\n", count)
+		}
 	}
 
 	return count
 }
-
-// handy snippet for drawing the robots positions
 
 func draw(robots []*Robot) {
 	runes := make([][]rune, LENGTH)
