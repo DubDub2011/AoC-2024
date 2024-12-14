@@ -12,6 +12,7 @@ import (
 func main() {
 	data := readInput()
 	fmt.Printf("Part 1: %d\n", solution.RobotPredictor(data, 100))
+	fmt.Printf("Part 2: %d\n", solution.RobotChristmasTree(data))
 }
 
 func readInput() [][]int {
