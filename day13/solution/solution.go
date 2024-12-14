@@ -1,28 +1,40 @@
 package solution
 
-func ClawMachine(input [][]float64) int {
+import "fmt"
+
+func ClawMachine(input [][]int) int {
 	// wonder if this wont work because computers don't math
 	tokens := 0
 	for _, puzzle := range input {
-		x := []float64{puzzle[0], puzzle[2], puzzle[4]} // #a + #b = #prize
-		y := []float64{puzzle[1], puzzle[3], puzzle[5]} // #a + #b = #prize
+		A := [][]int{
+			{puzzle[0], puzzle[1]},
+			{puzzle[2], puzzle[3]},
+		}
 
-		// see if the way it's done on paper works
-		x = []float64{x[0], -x[1], x[2]}                     // minus #b to get #a = #prize - #b
-		x = []float64{x[0] / x[0], x[1] / x[0], x[2] / x[0]} // divide by #a to get a = (#prize - #b) / #a
+		B := []int{
+			puzzle[4],
+			puzzle[5],
+		}
 
-		y = []float64{y[0], y[1] + (x[1] * y[0]), y[2] - (x[2] * y[0])}
-
-		b := y[2] / y[1]
-		a := x[2] + (x[1] * b)
-
-		if b != float64(int(b)) {
-			continue
-		} else if a != float64(int(a)) {
+		// Use matrix method
+		determinant := A[0][0]*A[1][1] - A[0][1]*A[1][0]
+		if determinant == 0 {
 			continue
 		}
 
-		tokens += int(a)*3 + int(b)
+		inverseA := [][]int{
+			{A[1][1], -A[0][1]},
+			{-A[1][0], A[0][0]},
+		}
+
+		result := []int{
+			(inverseA[0][0]*B[0] + inverseA[0][1]*B[1]) / determinant,
+			(inverseA[1][0]*B[0] + inverseA[1][1]*B[1]) / determinant,
+		}
+
+		fmt.Printf("Result %v\n", result)
+
+		tokens += result[0]*3 + result[1]
 	}
 	return tokens
 }

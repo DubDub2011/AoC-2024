@@ -8,15 +8,15 @@ import (
 
 func TestClawMachine(t *testing.T) {
 	testCases := []struct {
-		input  [][]float64
+		input  [][]int
 		output int
 	}{
-		{[][]float64{
-			{3, 2, 5, 7, 23, 31}, // this doesn't work, infinite solutions
-		}, 7},
-		{[][]float64{
-			{94, 34, 22, 67, 8400, 5400},
-		}, 280},
+		{[][]int{
+			{1, 1, 3, 2, 6, 12},
+		}, 6},
+		{[][]int{
+			{2, 1, -1, 1, 5, 2},
+		}, 6},
 	}
 
 	for idx, tc := range testCases {
