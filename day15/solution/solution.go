@@ -1,5 +1,5 @@
 package solution
 
-func RobotMover(mapData [][]rune, commands []rune) int {
+func BoxChecker(mapData [][]rune, commands []rune) int {
 	return 0
 }
