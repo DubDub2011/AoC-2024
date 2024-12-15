@@ -9,7 +9,7 @@ func TestRobot(t *testing.T) {
 	robot := NewRobot(gr.Position{0, 0}, []rune(">>vv"))
 
 	for {
-		mover := robot.GetMoveDirection()
+		mover, _ := robot.GetMoveDirection()
 		if mover == nil {
 			break
 		}
@@ -24,7 +24,7 @@ func TestRobot(t *testing.T) {
 
 	robot.commands = []rune(">v<^>v<^>v<^") // move in circle 3 times
 	for {
-		mover := robot.GetMoveDirection()
+		mover, _ := robot.GetMoveDirection()
 		if mover == nil {
 			break
 		}
@@ -39,7 +39,7 @@ func TestRobot(t *testing.T) {
 
 	robot.commands = []rune("<^^<") // move in circle 3 times
 	for {
-		mover := robot.GetMoveDirection()
+		mover, _ := robot.GetMoveDirection()
 		if mover == nil {
 			break
 		}

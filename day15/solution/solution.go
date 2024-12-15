@@ -2,7 +2,6 @@ package solution
 
 import (
 	gr "day15/grid"
-	"fmt"
 )
 
 func BoxChecker(mapData [][]rune, commands []rune) int {
@@ -18,8 +17,7 @@ func BoxChecker(mapData [][]rune, commands []rune) int {
 	robot := NewRobot(startPos, commands)
 
 	for {
-		fmt.Printf("Grid: %s\n", grid.String())
-		mover := robot.GetMoveDirection()
+		mover, _ := robot.GetMoveDirection()
 		if mover == nil {
 			break
 		}
