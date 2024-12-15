@@ -24,6 +24,19 @@ func TestRobotMover(t *testing.T) {
 				[]rune("#####"),
 			}, []rune("<v>>^^<<v>"), 0,
 		},
+		{
+			[][]rune{
+				[]rune("#########"),
+				[]rune("#.......#"),
+				[]rune("#.....O.#"),
+				[]rune("#.......#"),
+				[]rune("#...@...#"),
+				[]rune("#.......#"),
+				[]rune("#...O...#"),
+				[]rune("#.....O.#"),
+				[]rune("#########"),
+			}, []rune(">vv<<<v<^^^^^v>>>>>^>^<<<<<<v>>>>>>>>>vvvvvvvvvv<<<<<"), 904, // should end with (1,1),(1,2),(7,1)
+		},
 	}
 
 	for idx, testCase := range testCases {

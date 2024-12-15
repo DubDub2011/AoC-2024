@@ -1,6 +1,8 @@
 package solution
 
-import gr "day15/grid"
+import (
+	gr "day15/grid"
+)
 
 func BoxChecker(mapData [][]rune, commands []rune) int {
 	grid := gr.New(mapData)
@@ -18,8 +20,13 @@ func BoxChecker(mapData [][]rune, commands []rune) int {
 		for idx := len(positions) - 1; idx >= 0; idx-- {
 			pos := positions[idx]
 			val := grid.GetPos(pos.X, pos.Y)
+			grid.SetPos(pos.X, pos.Y, '.')
 			pos = mover(pos)
 			grid.SetPos(pos.X, pos.Y, val)
+		}
+
+		if len(positions) != 0 {
+			robot.Position = mover(robot.Position)
 		}
 	}
 
@@ -27,7 +34,7 @@ func BoxChecker(mapData [][]rune, commands []rune) int {
 	for pos := range grid.Positions() {
 		val := grid.GetPos(pos.X, pos.Y)
 		if val == 'O' {
-			sum += pos.X*100 + pos.Y
+			sum += pos.X + pos.Y*100
 		}
 	}
 
