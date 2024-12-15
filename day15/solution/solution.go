@@ -2,15 +2,23 @@ package solution
 
 import (
 	gr "day15/grid"
+	"fmt"
 )
 
 func BoxChecker(mapData [][]rune, commands []rune) int {
 	grid := gr.New(mapData)
-	startPos := gr.Position{X: grid.GetLength() / 2, Y: grid.GetWidth() / 2}
+	var startPos gr.Position
+	for pos := range grid.Positions() {
+		if grid.GetPos(pos.X, pos.Y) == '@' {
+			startPos = pos
+			break
+		}
+	}
 
 	robot := NewRobot(startPos, commands)
 
 	for {
+		fmt.Printf("Grid: %s\n", grid.String())
 		mover := robot.GetMoveDirection()
 		if mover == nil {
 			break
