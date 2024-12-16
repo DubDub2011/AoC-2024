@@ -18,6 +18,19 @@ func TestReindeerMaze(t *testing.T) {
 				[]rune("#############"),
 			}, 10,
 		},
+		{
+			[][]rune{
+				[]rune("###"),
+				[]rune("#E#"),
+				[]rune("#.#"),
+				[]rune("#.#"),
+				[]rune("#.#"),
+				[]rune("#.#"),
+				[]rune("#.#"),
+				[]rune("#S#"),
+				[]rune("###"),
+			}, 1006,
+		},
 	}
 
 	for idx, tc := range testCases {
