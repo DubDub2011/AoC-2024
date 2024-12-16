@@ -21,7 +21,7 @@ func NewReindeer(startPos gr.Position) *Reindeer {
 		0,
 		0,
 		startPos,
-		make([]gr.Position, 0),
+		[]gr.Position{startPos},
 	}
 }
 
@@ -47,8 +47,8 @@ func (rndr *Reindeer) TurnRight() {
 }
 
 func (rndr *Reindeer) Move() {
-	rndr.path = append(rndr.path, rndr.currPos)
 	rndr.currPos = directionMovers[rndr.direction](rndr.currPos)
+	rndr.path = append(rndr.path, rndr.currPos)
 	rndr.score += 1
 }
 

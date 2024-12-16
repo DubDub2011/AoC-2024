@@ -10,6 +10,7 @@ import (
 func main() {
 	mapData := readInput()
 	fmt.Printf("Part 1: %d\n", solution.ReindeerMaze(mapData))
+	fmt.Printf("Part 2: %d\n", solution.SeatFinder(mapData))
 }
 
 func readInput() [][]rune {
