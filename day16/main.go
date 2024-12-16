@@ -2,14 +2,14 @@ package main
 
 import (
 	"bufio"
+	"day16/solution"
 	"fmt"
 	"os"
 )
 
 func main() {
-	// looks like it's time to learn A*
 	mapData := readInput()
-	fmt.Printf("Map data: %v\n", mapData)
+	fmt.Printf("Part 1: %d\n", solution.ReindeerMaze(mapData))
 }
 
 func readInput() [][]rune {

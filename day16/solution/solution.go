@@ -2,7 +2,6 @@ package solution
 
 import (
 	gr "day16/grid"
-	"fmt"
 )
 
 func ReindeerMaze(mapData [][]rune) int {
@@ -18,9 +17,6 @@ func ReindeerMaze(mapData [][]rune) int {
 			targetPos = pos
 		}
 	}
-
-	fmt.Printf("Start, End: %v, %v\n", startPos, targetPos)
-	fmt.Printf("Grid: %s\n", grid.String())
 
 	reindeers := []*Reindeer{NewReindeer(startPos)}
 	positionScores := make([][]int, grid.GetWidth())

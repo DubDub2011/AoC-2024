@@ -10,10 +10,10 @@ var directionMovers = map[int]func(gr.Position) gr.Position{
 }
 
 type Reindeer struct {
-	score       int
-	direction   int
-	currPos     gr.Position
-	previousPos gr.Position
+	score     int
+	direction int
+	currPos   gr.Position
+	path      []gr.Position
 }
 
 func NewReindeer(startPos gr.Position) *Reindeer {
@@ -21,16 +21,18 @@ func NewReindeer(startPos gr.Position) *Reindeer {
 		0,
 		0,
 		startPos,
-		startPos,
+		make([]gr.Position, 0),
 	}
 }
 
 func (rndr *Reindeer) Clone() *Reindeer {
+	pathClone := make([]gr.Position, len(rndr.path))
+	copy(pathClone, rndr.path)
 	return &Reindeer{
 		rndr.score,
 		rndr.direction,
 		rndr.currPos,
-		rndr.previousPos,
+		pathClone,
 	}
 }
 
@@ -45,7 +47,7 @@ func (rndr *Reindeer) TurnRight() {
 }
 
 func (rndr *Reindeer) Move() {
-	rndr.previousPos = rndr.currPos
+	rndr.path = append(rndr.path, rndr.currPos)
 	rndr.currPos = directionMovers[rndr.direction](rndr.currPos)
 	rndr.score += 1
 }
