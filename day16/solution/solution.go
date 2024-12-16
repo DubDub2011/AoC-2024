@@ -3,7 +3,6 @@ package solution
 import (
 	gr "day16/grid"
 	"fmt"
-	"sort"
 )
 
 func ReindeerMaze(mapData [][]rune) int {
@@ -24,7 +23,14 @@ func ReindeerMaze(mapData [][]rune) int {
 	fmt.Printf("Grid: %s\n", grid.String())
 
 	reindeers := []*Reindeer{NewReindeer(startPos)}
-	scores := []int{}
+	positionScores := make([][]int, grid.GetWidth())
+	for idx := range positionScores {
+		positionScores[idx] = make([]int, grid.GetLength())
+		for idy := range positionScores[idx] {
+			positionScores[idx][idy] = 9999999999
+		}
+	}
+
 	for {
 		if len(reindeers) == 0 {
 			break
@@ -36,31 +42,41 @@ func ReindeerMaze(mapData [][]rune) int {
 			if left {
 				newReindeer := reindeer.Clone()
 				newReindeer.TurnLeft()
+				newReindeer.Move()
 				reindeers = append(reindeers, newReindeer)
 			}
 
 			if right {
 				newReindeer := reindeer.Clone()
 				newReindeer.TurnRight()
+				newReindeer.Move()
 				reindeers = append(reindeers, newReindeer)
 			}
 
 			reindeer.Move()
 			val := grid.GetPos(reindeer.currPos.X, reindeer.currPos.Y)
-			if val == '.' {
-				continue
-			} else if val == '#' {
+			if val == '#' {
 				reindeers = append(reindeers[:idx], reindeers[idx+1:]...) // crashed and burned :(
 				idx--
-			} else if val == 'E' {
-				scores = append(scores, reindeer.score)
+				continue
+			}
+
+			if positionScores[reindeer.currPos.X][reindeer.currPos.Y] > reindeer.score {
+				positionScores[reindeer.currPos.X][reindeer.currPos.Y] = reindeer.score
+			} else {
+				reindeers = append(reindeers[:idx], reindeers[idx+1:]...) // too slow :(
+				idx--
+				continue
+			}
+
+			if val == 'E' {
 				reindeers = append(reindeers[:idx], reindeers[idx+1:]...) // he won :)
 				idx--
+				continue
 			}
+
 		}
 	}
 
-	sort.Ints(scores)
-
-	return scores[0]
+	return positionScores[targetPos.X][targetPos.Y]
 }
