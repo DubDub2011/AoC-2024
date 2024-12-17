@@ -72,7 +72,7 @@ func adv(operand int) {
 func bxl(operand int) {
 	fmt.Printf("bxl by %d\n", operand)
 
-	B = bitwiseOr(B, operand)
+	B = bitwiseXor(B, operand)
 }
 
 func bst(operand int) {
@@ -103,7 +103,7 @@ func jnz(operand int) bool {
 
 func bxc(operand int) {
 	fmt.Printf("bxc by %d\n", operand)
-	B = bitwiseOr(B, C)
+	B = bitwiseXor(B, C)
 }
 
 func out(operand int) {
@@ -157,7 +157,7 @@ func powInt(x, y int) int {
 	return int(math.Pow(float64(x), float64(y)))
 }
 
-func bitwiseOr(a, b int) int {
+func bitwiseXor(a, b int) int {
 	aBin := strconv.FormatInt(int64(a), 2)
 	bBin := strconv.FormatInt(int64(b), 2)
 
@@ -174,10 +174,11 @@ func bitwiseOr(a, b int) int {
 			right = rune(bBin[len(bBin)-idx-1])
 		}
 
-		if left == '1' || right == '1' {
-			res = "1" + res
-		} else {
+		if left == '0' && right == '0' ||
+			left == '1' && right == '1' {
 			res = "0" + res
+		} else {
+			res = "1" + res
 		}
 
 		if idx >= len(aBin) && idx >= len(bBin) {
