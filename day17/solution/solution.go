@@ -1,7 +1,6 @@
 package solution
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -54,7 +53,6 @@ func ThreeBitComputer(registers, program []int) string {
 }
 
 func adv(operand int) {
-	fmt.Printf("adv by %d\n", operand)
 	numerator := A
 
 	if operand == 4 {
@@ -70,14 +68,10 @@ func adv(operand int) {
 }
 
 func bxl(operand int) {
-	fmt.Printf("bxl by %d\n", operand)
-
 	B = bitwiseXor(B, operand)
 }
 
 func bst(operand int) {
-	fmt.Printf("bst by %d\n", operand)
-
 	if operand == 4 {
 		operand = A
 	} else if operand == 5 {
@@ -90,24 +84,19 @@ func bst(operand int) {
 }
 
 func jnz(operand int) bool {
-	fmt.Printf("jnz by %d\n", operand)
-
 	if A == 0 {
 		return false
 	}
 
-	fmt.Printf("jumped to %d\n", operand)
 	instructionPointer = operand
 	return true
 }
 
 func bxc(operand int) {
-	fmt.Printf("bxc by %d\n", operand)
 	B = bitwiseXor(B, C)
 }
 
 func out(operand int) {
-	fmt.Printf("out by %d\n", operand)
 	if operand == 4 {
 		operand = A
 	} else if operand == 5 {
@@ -116,12 +105,10 @@ func out(operand int) {
 		operand = C
 	}
 
-	fmt.Printf("outValue %s\n", strconv.Itoa(operand%8))
 	results = append(results, strconv.Itoa(operand%8))
 }
 
 func bdv(operand int) {
-	fmt.Printf("bdv by %d\n", operand)
 	numerator := A
 
 	if operand == 4 {
@@ -137,7 +124,6 @@ func bdv(operand int) {
 }
 
 func cdv(operand int) {
-	fmt.Printf("cdv by %d\n", operand)
 	numerator := A
 
 	if operand == 4 {

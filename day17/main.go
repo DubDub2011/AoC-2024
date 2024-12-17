@@ -13,7 +13,8 @@ func main() {
 	registers, instructions := readInput()
 	fmt.Printf("Registers %v\n", registers)
 	fmt.Printf("Instructions %v\n", instructions)
-	fmt.Printf("Part 1: %s", solution.ThreeBitComputer(registers, instructions))
+	fmt.Printf("Part 1: %s\n", solution.ThreeBitComputer(registers, instructions))
+	solution.Repeat(registers, instructions)
 }
 
 func readInput() ([]int, []int) {
