@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"day17/solution"
 	"fmt"
 	"os"
 	"strconv"
@@ -12,6 +13,7 @@ func main() {
 	registers, instructions := readInput()
 	fmt.Printf("Registers %v\n", registers)
 	fmt.Printf("Instructions %v\n", instructions)
+	fmt.Printf("Part 1: %s", solution.ThreeBitComputer(registers, instructions))
 }
 
 func readInput() ([]int, []int) {
