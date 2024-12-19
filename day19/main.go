@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"day19/solution"
 	"fmt"
 	"os"
 	"strings"
@@ -9,8 +10,7 @@ import (
 
 func main() {
 	patterns, target := readInput()
-	fmt.Printf("Patterns: %v\n", patterns)
-	fmt.Printf("Target: %v\n", target)
+	fmt.Printf("Part 1: %d\n", solution.PossibleDesigns(patterns, target))
 }
 
 func readInput() ([]string, []string) {
@@ -22,7 +22,7 @@ func readInput() ([]string, []string) {
 	scanner := bufio.NewScanner(data)
 	scanner.Scan()
 
-	availablePatterns := strings.Split(scanner.Text(), ",")
+	availablePatterns := strings.Split(scanner.Text(), ", ")
 
 	scanner.Scan() // empty line
 

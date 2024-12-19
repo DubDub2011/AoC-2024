@@ -17,6 +17,54 @@ func TestPatternBuilder(t *testing.T) {
 			[]string{"aaa"},
 			1,
 		},
+		{
+			[]string{"a", "b"},
+			[]string{"aba"},
+			1,
+		},
+		{
+			[]string{"a", "b"},
+			[]string{"abc"},
+			0,
+		},
+		{
+			[]string{"a", "aa", "ab", "b"},
+			[]string{"aaabbaba"},
+			1,
+		},
+		{
+			[]string{"a", "aa", "ab", "b"},
+			[]string{"aaabbaba"},
+			1,
+		},
+		{
+			[]string{"r", "wr", "b", "g", "bwu", "rb", "gb", "br"},
+			[]string{
+				"brwrr",
+				"bggr",
+				"gbbr",
+				"rrbgbr",
+				"ubwu",
+				"bwurrg",
+				"brgr",
+				"bbrgwb",
+			},
+			6,
+		},
+		{
+			[]string{"r", "wr", "b", "g", "bwu", "rb", "gb", "br"},
+			[]string{
+				"brwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrrbrwrr",
+				"bggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggrbggr",
+				"gbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbrgbbr",
+				"rrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbrrrbgbr",
+				"ubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwuubwu",
+				"bwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrgbwurrg",
+				"brgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgrbrgr",
+				"bbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwbbbrgwb",
+			},
+			6,
+		},
 	}
 
 	for idx, tc := range testCases {
