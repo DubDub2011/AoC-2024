@@ -11,6 +11,7 @@ import (
 func main() {
 	patterns, target := readInput()
 	fmt.Printf("Part 1: %d\n", solution.PossibleDesigns(patterns, target))
+	fmt.Printf("Part 2: %d\n", solution.AllDesigns(patterns, target))
 }
 
 func readInput() ([]string, []string) {

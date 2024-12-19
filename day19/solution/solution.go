@@ -8,7 +8,6 @@ func PossibleDesigns(availablePatterns []string, targetPatterns []string) int {
 		possibleParts[pattern] = struct{}{}
 	}
 
-	// remove anything covered by smaller sub parts
 	for part := range possibleParts {
 		for idx := 0; idx < len(part); idx++ {
 			left, right := part[:idx], part[idx:]

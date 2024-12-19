@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestPatternBuilder(t *testing.T) {
+func TestPossibleDesigns(t *testing.T) {
 	testCases := []struct {
 		availablePatterns []string
 		targetPatterns    []string
@@ -70,6 +70,34 @@ func TestPatternBuilder(t *testing.T) {
 	for idx, tc := range testCases {
 		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
 			res := solution.PossibleDesigns(tc.availablePatterns, tc.targetPatterns)
+			if res != tc.possibleDesigns {
+				t.Errorf("Expected %d, got %d", tc.possibleDesigns, res)
+			}
+		})
+	}
+}
+
+func TestAllDesigns(t *testing.T) {
+	testCases := []struct {
+		availablePatterns []string
+		targetPatterns    []string
+		possibleDesigns   int
+	}{
+		{
+			[]string{"a"},
+			[]string{"aaa"},
+			1,
+		},
+		{
+			[]string{"a", "aa"},
+			[]string{"aaa"},
+			3,
+		},
+	}
+
+	for idx, tc := range testCases {
+		t.Run(fmt.Sprintf("Test case %d", idx), func(t *testing.T) {
+			res := solution.AllDesigns(tc.availablePatterns, tc.targetPatterns)
 			if res != tc.possibleDesigns {
 				t.Errorf("Expected %d, got %d", tc.possibleDesigns, res)
 			}
